@@ -380,7 +380,14 @@ function isBracketsBalanced(str) {
  *    365, 10 => '365'
  */
 function toNaryString(num, n) {
-  return String(parseInt(num.toString(), n));
+  let result = '';
+  let d = num;
+  while (d >= n) {
+    result += d % n;
+    d = Math.trunc(d / n);
+  }
+  result += d;
+  return result.split('').reverse().join('');
 }
 
 
@@ -419,8 +426,23 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const rM1 = m1.length;
+  const cM1 = m1[0].length;
+  const eM2 = m2.length;
+  const cM2 = m2[0].length;
+  const result = [];
+  if (cM1 !== eM2) return false;
+  for (let i = 0; i < rM1; i += 1) result[i] = [];
+  for (let k = 0; k < cM2; k += 1) {
+    for (let i = 0; i < rM1; i += 1) {
+      let t = 0;
+      for (let j = 0; j < eM2; j += 1) t += m1[i][j] * m2[j][k];
+      result[i][k] = t;
+    }
+  }
+
+  return result;
 }
 
 
@@ -454,8 +476,30 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  for (let i = 0; i < position.length; i += 1) {
+    if (position[i][0] === position[i][1] && position[i][0] === position[i][2]) {
+      if (position[i][0] !== undefined) {
+        return position[i][0];
+      }
+    }
+    if (position[0][i] === position[1][i] && position[0][i] === position[2][i]) {
+      if (position[0][i] !== undefined) {
+        return position[0][i];
+      }
+    }
+  }
+  if (position[0][0] === position[1][1] && position[0][0] === position[2][2]) {
+    if (position[0][0] !== undefined) {
+      return position[0][0];
+    }
+  }
+  if (position[0][2] === position[1][1] && position[0][2] === position[2][0]) {
+    if (position[0][2] !== undefined) {
+      return position[0][2];
+    }
+  }
+  return undefined;
 }
 
 
